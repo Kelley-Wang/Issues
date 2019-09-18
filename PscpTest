@@ -1,0 +1,12 @@
+//https://www.ssh.com/ssh/putty/putty-manuals/0.68/Chapter5.html
+//pscp remote copy file from linux to windows in CMD.exe
+
+//issue1:fixed nosupport remote file fail issue when path have whitespace such "Test data".
+//Answer:add Add quotation marks for the path and path contain filname.
+
+//first tranfer file need click 'y' to grarrante in firtly.
+
+>pscp.exe -scp root@IP:/spare-disk/File1.txt" "C:\Test Data\File1.txt"
+>y
+>exit
+
