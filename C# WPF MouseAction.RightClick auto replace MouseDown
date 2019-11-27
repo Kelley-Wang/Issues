@@ -1,0 +1,68 @@
+ private void InitializeComponent()
+        {
+            LeftDoubleClickCommand = new Prism.Commands.DelegateCommand(LeftDoubleCommand);
+            RigthDoubleClickCommand = new Prism.Commands.DelegateCommand(RightDoubleCommand);
+
+            LeftClickCommand = new Prism.Commands.DelegateCommand(LeftCommand);
+            RigthClickCommand = new Prism.Commands.DelegateCommand(RightCommand);
+            if (image1 == null)
+            {
+                this.image1 = new System.Windows.Controls.Image();
+                //double click
+                MouseBinding mBind_LeftDouble = new MouseBinding();
+                mBind_LeftDouble.MouseAction = MouseAction.LeftDoubleClick;
+                mBind_LeftDouble.Command = LeftDoubleClickCommand;
+                this.image1.InputBindings.Add(mBind_LeftDouble);
+
+                MouseBinding mBind_RightDouble = new MouseBinding();
+                mBind_RightDouble.MouseAction = MouseAction.RightDoubleClick;
+                mBind_RightDouble.Command = RigthDoubleClickCommand;
+                this.image1.InputBindings.Add(mBind_RightDouble);
+
+                //single click.
+                MouseBinding mBind_Left = new MouseBinding();
+                mBind_Left.MouseAction = MouseAction.LeftClick;
+                mBind_Left.Command = LeftClickCommand;
+                this.image1.InputBindings.Add(mBind_Left);
+
+                MouseBinding mBind_Right = new MouseBinding();
+                mBind_Right.MouseAction = MouseAction.RightClick;
+                mBind_Right.Command = RigthClickCommand;
+                this.image1.InputBindings.Add(mBind_Right);
+
+            }
+            image1.BeginInit();
+            image1.Name = "ScottPlotUC";
+            this.AddChild(image1);
+            image1.SizeChanged += Image1_SizeChanged;
+
+            this.image1.MouseDown += Image1_MouseDown;
+            this.image1.MouseUp += Image1_MouseUp;
+            this.image1.MouseMove += Image1_MouseMove;
+            this.image1.MouseWheel += Image1_MouseWheel;
+
+            this.wpRectangle.MouseMove += wpRectangle_MouseMove;
+            this.wpRectangle.MouseUp += wpRectangle_MouseUp;
+
+            image1.EndInit();
+        }
+
+        #endregion
+
+        private System.Windows.Controls.Image image1;
+        
+click event output log:
+>1 double click mouse-right, then outpu as:
+RightCommand
+Image1_MouseUp
+RightDoubeCommand
+Image1_MouseUp
+>2 single click mouse-left,
+LeftCommand
+Image1_MouseUp
+>3 single click mouse-right,
+RightCommand
+Image1_MouseUp
+
+Summary: mouse action's mouse click(right,left) will replace Image1_MouseDown event.
+
