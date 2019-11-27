@@ -1,0 +1,60 @@
+private Grid homegrid = new Grid();//scottplot's parent control.
+
+//draing rectange then zoom plot.  
+private System.Windows.Shapes.Rectangle wpRectangle = new System.Windows.Shapes.Rectangle();
+
+       private void Image1_MouseDown(object sender, MouseButtonEventArgs e)
+        {  
+            //_rectStartLocation record rectangle's start point to image.
+            System.Windows.Controls.Image img = sender as System.Windows.Controls.Image;
+            _rectStartLocation = e.GetPosition(img);
+            
+            //other code to do..
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                homegrid = this.Parent as Grid;
+                if (homegrid != null)
+                {
+                    this.homegrid.MouseLeave += Homegrid_MouseLeave;
+                }
+                rectMargin.Left = _rectStartLocation.X;
+                rectMargin.Top = _rectStartLocation.Y;
+            }
+        }
+        
+        //focus on control boundary for positive/nagative drag mouse.
+        private void DrawingZoomedRectangle()
+        {
+            System.Windows.Point crrentLocation = Mouse.GetPosition(image1);
+            //adjust rectangle margin value by stopPoint.
+            //left/right
+            if (crrentLocation.X < _rectStartLocation.X)
+            {
+                rectMargin.Left = crrentLocation.X;
+                rectMargin.Right = homegrid.ActualWidth - _rectStartLocation.X;
+            }
+            else
+            {
+                rectMargin.Left = _rectStartLocation.X;
+                rectMargin.Right = homegrid.ActualWidth - crrentLocation.X;
+            }
+
+            ////about up/down
+            if (crrentLocation.Y < _rectStartLocation.Y)
+            {
+                rectMargin.Top = crrentLocation.Y;
+                rectMargin.Bottom = homegrid.ActualHeight - _rectStartLocation.Y;
+            }
+            else
+            {
+                rectMargin.Top = _rectStartLocation.Y;
+                rectMargin.Bottom = homegrid.ActualHeight - crrentLocation.Y;
+            }
+
+            wpRectangle.Margin = rectMargin;
+            if (!homegrid.Children.Contains(wpRectangle))
+            {
+                homegrid.Children.Add(wpRectangle);
+            }
+            //can drawing rectangle border.to do...
+        }
